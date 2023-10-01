@@ -114,3 +114,17 @@ class BrokenLinks(PageFactory):
     broken_image = (By.XPATH, "//p[contains(text(),'Broken image')]//following-sibling::img[1]")
     valid_link = (By.XPATH, "//a[text()='Click Here for Valid Link']")
     broken_link = (By.XPATH, "//a[text()='Click Here for Broken Link']")
+
+
+class UploadDownload(PageFactory):
+
+    download = (By.ID, "downloadButton")
+    upload = (By.ID, "uploadFile")
+    upload_file_path = (By.ID, "uploadedFilePath")
+
+
+class DynamicProp(PageFactory):
+
+    enable_after = (By.ID, "enableAfter")
+    color_change = (By.ID, "colorChange")
+    visible_after = (By.ID, "visibleAfter")

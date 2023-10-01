@@ -1,5 +1,7 @@
 import time
 
+import selenium.common.exceptions
+
 from utility.utils import *
 from page_objects.demo_qa_elements import *
 import allure
@@ -13,6 +15,8 @@ webtable_page = WebTables()
 button_page = Buttons()
 link_page = Links()
 broken_link_page = BrokenLinks()
+upload_download_page = UploadDownload()
+dynamic_page = DynamicProp()
 
 
 @allure.title("Demo QA: Elements")
@@ -198,3 +202,38 @@ class TestElements:
         broken_response = get(broken_url)
         assert broken_response.status_code == 500, f"Url doesn't return 500 as response"
 
+    def test_elem_upload_download(self, driver):
+        scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Upload and Download"))
+        wait_until_elem_has_text(driver, homepage.main_header, "Upload and Download")
+
+        scroll_to_elem_n_click(driver, upload_download_page.download)
+        # wait till the file gets downloaded
+        while not os.path.isfile(downloaded_file_path):
+            time.sleep(1)
+        assert os.path.exists(downloaded_file_path), f"The file is not downloaded yet"
+
+        # Upload the file
+        input_text(driver, upload_download_page.upload, upload_file_path)
+        wait_until_elem_has_text(driver, upload_download_page.upload_file_path, f"C:\\fakepath\\{upload_file_name}")
+
+    def test_elem_dynamic_properties(self, driver):
+        scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Dynamic Properties"))
+        wait_until_elem_has_text(driver, homepage.main_header, "Dynamic Properties")
+
+        assert not driver.find_element(*dynamic_page.enable_after).is_enabled(),\
+            f"Button is enabled before 5 seconds"
+
+        # Get the color of the element
+        color = driver.find_element(*dynamic_page.color_change).value_of_css_property("color")
+
+        try:
+            assert not driver.find_element(*dynamic_page.visible_after).is_displayed(),\
+                f"Visible after button is displayed before 5 seconds"
+        except selenium.common.exceptions.NoSuchElementException:
+            pass
+
+        WebDriverWait(driver, 6).until(ec.visibility_of_element_located(dynamic_page.visible_after))
+        assert driver.find_element(*dynamic_page.enable_after).is_enabled(), f"Button is not enabled after 5 seconds"
+
+        new_color = driver.find_element(*dynamic_page.color_change).value_of_css_property("color")
+        assert color != new_color, f"Color is not changed after 5 seconds"
