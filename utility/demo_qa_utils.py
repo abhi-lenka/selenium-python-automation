@@ -13,3 +13,10 @@ username = "Bruce Wayne"
 email = "bruce@wayne.com"
 current_addr = "Wayne Mansion"
 permanent_addr = "Gotham"
+
+# Web Tables
+fname = "Bruce"
+lname = "Wayne"
+age = 35
+salary = 100
+department = "Business"

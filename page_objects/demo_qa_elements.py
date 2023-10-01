@@ -77,8 +77,40 @@ class WebTables(PageFactory):
     registration_form = (By.ID, "registration-form-modal")
     form_first_name = (By.CSS_SELECTOR, "#userForm #firstName")
     form_last_name = (By.CSS_SELECTOR, "#userForm #lastName")
-    form_email = (By.CSS_SELECTOR, "#userForm #lastName")
+    form_email = (By.CSS_SELECTOR, "#userForm #userEmail")
     form_age = (By.CSS_SELECTOR, "#userForm #age")
     form_salary = (By.CSS_SELECTOR, "#userForm #salary")
     form_dep = (By.CSS_SELECTOR, "#userForm #department")
     form_submit = (By.CSS_SELECTOR, "#userForm #submit")
+
+
+class Buttons(PageFactory):
+
+    double_click_btn = (By.ID, "doubleClickBtn")
+    right_click_btn = (By.ID, "rightClickBtn")
+    click_me_btn = (By.XPATH, "//button[text()='Click Me']")
+    double_click_msg = (By.ID, "doubleClickMessage")
+    right_click_msg = (By.ID, "rightClickMessage")
+    dynamic_click_msg = (By.ID, "dynamicClickMessage")
+
+
+class Links(PageFactory):
+
+    simple_link = (By.ID, "simpleLink")
+    dynamic_link = (By.ID, "dynamicLink")
+    created = (By.ID, "created")
+    no_content = (By.ID, "no-content")
+    moved = (By.ID, "moved")
+    bad_request = (By.ID, "bad-request")
+    un_auth = (By.ID, "unauthorized")
+    forbidden = (By.ID, "forbidden")
+    invalid_url = (By.ID, "invalid-url")
+    link_response = (By.ID, "linkResponse")
+
+
+class BrokenLinks(PageFactory):
+
+    valid_image = (By.XPATH, "//p[contains(text(),'Valid image')]//following-sibling::img[1]")
+    broken_image = (By.XPATH, "//p[contains(text(),'Broken image')]//following-sibling::img[1]")
+    valid_link = (By.XPATH, "//a[text()='Click Here for Valid Link']")
+    broken_link = (By.XPATH, "//a[text()='Click Here for Broken Link']")

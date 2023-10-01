@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.action_chains import ActionChains
 from seleniumpagefactory.Pagefactory import WebElement
 from confest import *
+from requests import get
 
 
 @pytest.fixture(scope="session")
@@ -57,3 +58,23 @@ def input_text(driver, ele, text):
     scroll_to_elem(driver, ele)
     driver.find_element(*ele).clear()
     driver.find_element(*ele).send_keys(text)
+
+
+@allure.step("Check if image is broken")
+def is_image_broken(driver, ele, attr=False):
+    elem = driver.find_element(*ele)
+    if not attr:
+        image_url = elem.get_attribute("src")
+        response = get(image_url)
+
+        # Check the status code of the response.
+        if response.status_code != 200:
+            # The image is broken.
+            return True
+        # The image is not broken.
+        return False
+    else:
+        # We can check the width of the image to check if it is broken
+        if elem.size["width"] == 0:
+            return True
+        return False

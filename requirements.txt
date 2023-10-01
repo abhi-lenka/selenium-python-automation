@@ -1,5 +1,6 @@
 pytest
 allure-pytest
 pytest-html
+requests
 selenium
 selenium-page-factory
