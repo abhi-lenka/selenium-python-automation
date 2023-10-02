@@ -23,7 +23,7 @@ class HomePage(PageFactory):
         return driver.find_element(By.XPATH, f"//div[@class='left-pannel']//span[contains(text(),'{text}')]/..")
 
 
-class ElementsPage(PageFactory):
+class TextBoxPage(PageFactory):
 
     # Input elements
     username = (By.ID, "userName")
@@ -128,3 +128,156 @@ class DynamicProp(PageFactory):
     enable_after = (By.ID, "enableAfter")
     color_change = (By.ID, "colorChange")
     visible_after = (By.ID, "visibleAfter")
+
+
+class PracticeForm(PageFactory):
+
+    f_name = (By.ID, "firstName")
+    l_name = (By.ID, "lastName")
+    email = (By.ID, "userEmail")
+
+    @staticmethod
+    def gender(text):
+        return By.CSS_SELECTOR, f"[type='radio'][value='{text}']"
+
+    @staticmethod
+    def gender_label(text):
+        return By.XPATH, f"//input[@type='radio'][@value='{text}']//parent::div"
+
+    mobile = (By.ID, "userNumber")
+    dob = (By.ID, "dateOfBirthInput")
+    subjects = (By.ID, "subjectsInput")
+
+    @staticmethod
+    def hobby_c_box(text):
+        return By.XPATH, f"//div[@id='hobbiesWrapper']//label[text()='{text}']//parent::div//input"
+
+    @staticmethod
+    def hobby_c_box_label(text):
+        return By.XPATH, f"//div[@id='hobbiesWrapper']//label[text()='{text}']"
+
+    upload_pic = (By.ID, "uploadPicture")
+    current_addr = (By.ID, "currentAddress")
+    state = (By.CSS_SELECTOR, "#state input")
+    city = (By.CSS_SELECTOR, "#city input")
+    submit = (By.ID, "submit")
+
+    submit_form_header = (By.XPATH,
+                          "//div[contains(@class,'modal-title')][contains(text(),'Thanks for submitting the form')]")
+
+    @staticmethod
+    def table_row(text):
+        return By.XPATH, f"//td[text()='{text}']"
+
+    close_modal = (By.ID, "closeLargeModal")
+
+
+class BrowserWindows(PageFactory):
+
+    new_tab = (By.ID, "tabButton")
+    new_window = (By.ID, "windowButton")
+    new_window_msg = (By.ID, "messageWindowButton")
+
+
+class Alerts(PageFactory):
+
+    alert_btn = (By.ID, "alertButton")
+    timer_alert_btn = (By.ID, "timerAlertButton")
+    confirm_btn = (By.ID, "confirmButton")
+    confirm_result = (By.ID, "confirmResult")
+    prompt_btn = (By.ID, "promtButton")
+    prompt_result = (By.ID, "promptResult")
+
+
+class Frames(PageFactory):
+
+    sample_h = (By.ID, "sampleHeading")
+    child_frame = (By.XPATH, "//iframe[@srcdoc='<p>Child Iframe</p>']")
+
+
+class Modals(PageFactory):
+
+    small_modal = (By.ID, "showSmallModal")
+    large_modal = (By.ID, "showLargeModal")
+
+    @staticmethod
+    def modal_title(text):
+        return By.XPATH, f"//div[contains(@class,'modal-title')][text()='{text}']"
+
+    close_btn = (By.XPATH, "//span[text()='Close']//parent::button")
+    close_small_modal = (By.ID, "closeSmallModal")
+    close_large_modal = (By.ID, "closeLargeModal")
+
+
+class Accordian(PageFactory):
+
+    heading_1 = (By.ID, "section1Heading")
+    heading_2 = (By.ID, "section2Heading")
+    heading_3 = (By.ID, "section3Heading")
+    content_1 = (By.ID, "section1Content")
+    content_2 = (By.ID, "section2Content")
+    content_3 = (By.ID, "section3Content")
+
+
+class AutoComplete(PageFactory):
+
+    autocomplete_multiple_input = (By.ID, "autoCompleteMultipleInput")
+
+    @staticmethod
+    def autocomplete_option(text):
+        return By.XPATH, f"//div[contains(@class,'auto-complete__menu')]" \
+                         f"//div[contains(@class,'auto-complete__option')][text()='{text}']"
+
+    @staticmethod
+    def autocomplete_labels(text):
+        return By.XPATH, f"//div[contains(@class,'auto-complete__multi-value__label')][text()='{text}']"
+
+    @staticmethod
+    def autocomplete_remove(text):
+        return By.XPATH, f"//div[contains(@class,'auto-complete__multi-value__label')][text()='{text}']" \
+                         f"//following-sibling::div[contains(@class,'auto-complete__multi-value__remove')]"
+
+    autocomplete_single_input = (By.ID, "autoCompleteSingleInput")
+    autocomplete_single_value = (By.XPATH, "//div[contains(@class,'auto-complete__single-value')]")
+
+
+class Slider(PageFactory):
+
+    slider = (By.CSS_SELECTOR, "#sliderContainer [type='range']")
+    slider_value = (By.ID, "sliderValue")
+
+
+class ProgressBar(PageFactory):
+
+    start_stop_btn = (By.ID, "startStopButton")
+    progress_bar = (By.CSS_SELECTOR, "#progressBar [role='progressbar']")
+    reset_btn = (By.ID, "resetButton")
+
+
+class Tabs(PageFactory):
+
+    what_tab = (By.ID, "demo-tab-what")
+    origin_tab = (By.ID, "demo-tab-origin")
+    use_tab = (By.ID, "demo-tab-use")
+    more_tab = (By.ID, "demo-tab-more")
+    what_panel = (By.ID, "demo-tabpane-what")
+    origin_panel = (By.ID, "demo-tabpane-origin")
+    use_panel = (By.ID, "demo-tabpane-use")
+
+
+class ToolTips(PageFactory):
+
+    tooltip_btn = (By.ID, "toolTipButton")
+    tooltip_text = (By.ID, "toolTipTextField")
+    contrary_text = (By.XPATH, "//a[text()='Contrary']")
+    tooltip = (By.CLASS_NAME, "tooltip-inner")
+
+
+class Menu(PageFactory):
+
+    @staticmethod
+    def menu_item(text):
+        return By.XPATH, f"//a[text()='{text}']"
+
+# class SelectMenu(PageFactory):
+

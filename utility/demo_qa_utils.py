@@ -17,8 +17,8 @@ current_addr = "Wayne Mansion"
 permanent_addr = "Gotham"
 
 # Web Tables
-fname = "Bruce"
-lname = "Wayne"
+f_name = "Bruce"
+l_name = "Wayne"
 age = 35
 salary = 100
 department = "Business"
@@ -28,3 +28,10 @@ downloaded_file_name = "sampleFile.jpeg"
 downloaded_file_path = f"{download_path}/{downloaded_file_name}"
 upload_file_name = "upload_file.jpeg"
 upload_file_path = f"{data_folder_path}/{upload_file_name}"
+
+# Forms
+mobile = 9876543210
+dob = "09/21/23"
+subject = "Maths"
+city = "Delhi"
+state = "NCR"
