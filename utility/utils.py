@@ -147,3 +147,12 @@ def delete_files_in_directory(directory_path):
 @allure.step("Get the css property of the element")
 def get_property_value(driver, ele, attr):
     return driver.find_element(*ele).get_attribute(attr)
+
+
+@allure.step("Drag and drop element")
+def drag_n_drop(driver, ac, src, des):
+    if not isinstance(src, WebElement):
+        src = driver.find_element(*src)
+    if not isinstance(des, WebElement):
+        des = driver.find_element(*des)
+    ac.drag_and_drop(src, des).perform()

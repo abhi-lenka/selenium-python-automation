@@ -279,5 +279,66 @@ class Menu(PageFactory):
     def menu_item(text):
         return By.XPATH, f"//a[text()='{text}']"
 
-# class SelectMenu(PageFactory):
 
+class SelectMenu(PageFactory):
+
+    select_option_input = (By.ID, "react-select-2-input")
+    select_option_value = (By.XPATH, "//div[@id='withOptGroup']//div[contains(@class,'singleValue')]")
+
+    @staticmethod
+    def select_menu_option(text):
+        return By.XPATH, f"//div[contains(@id, 'react-select-2-option')][contains(text(),'{text}')]"
+
+    select_title_input = (By.ID, "react-select-3-input")
+    select_title_value = (By.XPATH, "//div[@id='selectOne']//div[contains(@class,'singleValue')]")
+
+    @staticmethod
+    def select_title_option(text):
+        return By.XPATH, f"//div[contains(@id, 'react-select-3-option')][contains(text(),'{text}')]"
+
+    old_select_menu = (By.ID, "oldSelectMenu")
+
+    multi_select_input = (By.ID, "react-select-4-input")
+
+    @staticmethod
+    def multi_select_option(text):
+        return By.XPATH, f"//div[contains(@id, 'react-select-4-option')][contains(text(),'{text}')]"
+
+    @staticmethod
+    def multi_select_value(text):
+        return By.XPATH, f"//div[contains(@class,'multiValue')]//child::div[contains(text(),'{text}')]"
+
+    std_multi_select = (By.ID , "cars")
+
+
+class Sortable(PageFactory):
+
+    list_tab = (By.ID, "demo-tab-list")
+    list_items = (By.CSS_SELECTOR, "#demo-tabpane-list .list-group-item")
+
+    @staticmethod
+    def list_item(text):
+        return By.XPATH, f"//div[@id='demo-tabpane-list']//div[contains(@class,'list-group-item')]" \
+                         f"[contains(text(),'{text}')]"
+
+    @staticmethod
+    def nth_list_item(n):
+        return By.XPATH, f"//div[@id='demo-tabpane-list']//*[contains(@class,'list-group-item')][{n}]"
+
+    grid_tab = (By.ID, "demo-tab-grid")
+    grid_items = (By.CSS_SELECTOR, "#demo-tabpane-grid .list-group-item")
+
+    @staticmethod
+    def grid_item(text):
+        return By.XPATH, f"//div[@id='demo-tabpane-grid']//div[contains(@class,'list-group-item')]" \
+                         f"[contains(text(),'{text}')]"
+
+    @staticmethod
+    def nth_grid_item(n):
+        return By.XPATH, f"//div[@id='demo-tabpane-grid']//*[contains(@class,'list-group-item')][{n}]"
+
+
+class Resizeable(PageFactory):
+
+    resizeable_restriction = (By.ID, "resizableBoxWithRestriction")
+    resizeable = (By.ID, "resizable")

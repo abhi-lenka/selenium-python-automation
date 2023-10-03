@@ -1,6 +1,7 @@
 import time
 from page_objects.demo_qa_elements import *
 from selenium.webdriver import Keys
+from selenium.webdriver.support.select import Select
 
 
 # Elements
@@ -32,6 +33,11 @@ p_bar_page = ProgressBar()
 tab_page = Tabs()
 tooltip_page = ToolTips()
 menu_page = Menu()
+select_menu_page = SelectMenu()
+
+# Interactions
+sortable_page = Sortable()
+resizeable_page = Resizeable()
 
 
 @allure.title(ELEMENTS)
@@ -553,6 +559,126 @@ class TestWidgets:
         ac.move_to_element(driver.find_element(*menu_page.menu_item("SUB SUB LIST »"))).perform()
         wait_until_elem_present(driver, menu_page.menu_item("Sub Sub Item 1"))
 
-    # def test_select_menu(self, driver, ac):
-    #     scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Select Menu"))
-    #     wait_until_elem_has_text(driver, homepage.main_header, "Select Menu")
+    def test_select_menu(self, driver, ac):
+        scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Select Menu"))
+        wait_until_elem_has_text(driver, homepage.main_header, "Select Menu")
+
+        option = "Group 2, option 2"
+        input_text(driver, select_menu_page.select_option_input, option)
+        wait_until_elem_present(driver, select_menu_page.select_menu_option(option))
+        scroll_to_elem_n_click(driver, select_menu_page.select_menu_option(option))
+        wait_until_elem_has_text(driver, select_menu_page.select_option_value, option)
+
+        option = "Dr."
+        input_text(driver, select_menu_page.select_title_input, option)
+        wait_until_elem_present(driver, select_menu_page.select_title_option(option))
+        scroll_to_elem_n_click(driver, select_menu_page.select_title_option(option))
+        wait_until_elem_has_text(driver, select_menu_page.select_title_value, option)
+
+        color = "Yellow"
+        old_select_menu = Select(driver.find_element(*select_menu_page.old_select_menu))
+        old_select_menu.select_by_visible_text(color)
+        assert old_select_menu.first_selected_option.text == color, f"{color} is not selected in the menu"
+
+        options = ["Green", "Black"]
+        for op in options:
+            input_text(driver, select_menu_page.multi_select_input, op)
+            wait_until_elem_present(driver, select_menu_page.multi_select_option(op))
+            scroll_to_elem_n_click(driver, select_menu_page.multi_select_option(op))
+            wait_until_elem_present(driver, select_menu_page.multi_select_value(op))
+
+        cars = ["volvo", "opel", "audi"]
+        std_multi_select_menu = Select(driver.find_element(*select_menu_page.std_multi_select))
+        for car in cars:
+            std_multi_select_menu.select_by_value(car)
+        for option in std_multi_select_menu.all_selected_options:
+            assert option.text.lower() in cars
+        std_multi_select_menu.deselect_all()
+        assert len(std_multi_select_menu.all_selected_options) == 0, f"All car options are not deselected"
+        std_multi_select_menu.select_by_value(cars[0])
+        assert len(std_multi_select_menu.all_selected_options) == 1, f"More car options selected"
+        assert std_multi_select_menu.all_selected_options[0].text.lower() == cars[0], f"{cars[0]} is not selected"
+
+
+@allure.title(INTERACTIONS)
+class TestInteractions:
+
+    @pytest.fixture(scope="function", autouse=True)
+    def go_to_interaction_page(self, driver):
+        navigate_to_url(driver, URL, homepage.logo)
+        scroll_to_elem_n_click(driver, homepage.card_elem(driver, INTERACTIONS))
+        wait_until_elem_has_text(driver, homepage.main_header, INTERACTIONS)
+
+    def test_sortable(self, driver, ac):
+        scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Sortable"))
+        wait_until_elem_has_text(driver, homepage.main_header, "Sortable")
+
+        old_items = ["One", "Two", "Three", "Four", "Five", "Six"]
+        new_items = ["Two", "Three", "Four", "Five", "One", "Six"]
+
+        scroll_to_elem(driver, sortable_page.list_item(old_items[5]))
+
+        list_items = driver.find_elements(*sortable_page.list_items)
+        for index, item in enumerate(list_items):
+            assert item.text == old_items[index], f"Items mismatch"
+
+        drag_n_drop(driver, ac, sortable_page.list_item(old_items[0]), sortable_page.list_item(old_items[4]))
+        wait_until(driver, ec.text_to_be_present_in_element(sortable_page.nth_list_item(1), old_items[1]), 10)
+
+        for index, item in enumerate(list_items):
+            assert item.text == new_items[index], f"Items mismatch after drag n drop"
+
+        old_items = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"]
+        new_items = ["One", "Two", "Four", "Five", "Six", "Seven", "Eight", "Three", "Nine"]
+
+        scroll_to_elem_n_click(driver, sortable_page.grid_tab)
+        wait_until_elem_present(driver, sortable_page.grid_item(old_items[0]))
+
+        grid_items = driver.find_elements(*sortable_page.grid_items)
+        for index, item in enumerate(grid_items):
+            assert item.text == old_items[index], f"Items mismatch"
+
+        drag_n_drop(driver, ac, sortable_page.grid_item(old_items[2]), sortable_page.grid_item(old_items[7]))
+        wait_until(driver, ec.text_to_be_present_in_element(sortable_page.nth_grid_item(3), old_items[3]), 10)
+
+        for index, item in enumerate(grid_items):
+            assert item.text == new_items[index], f"Items mismatch after drag n drop"
+
+    def test_selectable(self, driver):
+        scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Selectable"))
+        wait_until_elem_has_text(driver, homepage.main_header, "Selectable")
+
+        items = [1, 2]
+
+        for item in items:
+            scroll_to_elem_n_click(driver, sortable_page.nth_list_item(item))
+
+        for item in items:
+            assert "active" in get_property_value(driver, sortable_page.nth_list_item(item), "class"),\
+                f"{item} is not selected"
+
+        scroll_to_elem_n_click(driver, sortable_page.grid_tab)
+        wait_until_elem_present(driver, sortable_page.nth_grid_item(items[0]))
+
+        for item in items:
+            scroll_to_elem_n_click(driver, sortable_page.nth_grid_item(item))
+
+        for item in items:
+            assert "active" in get_property_value(driver, sortable_page.nth_grid_item(item), "class"),\
+                f"{item} is not selected"
+
+    def test_resizeable(self, driver):
+        scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Resizable"))
+        wait_until_elem_has_text(driver, homepage.main_header, "Resizable")
+
+        driver.execute_script("arguments[0].style='width: 300px; height: 250px;'",
+                              driver.find_element(*resizeable_page.resizeable_restriction))
+
+        assert "width: 300px; height: 250px;"\
+               in get_property_value(driver, resizeable_page.resizeable_restriction, "style"), f"Box didn't resize"
+
+        driver.execute_script("arguments[0].style='width: 300px; height: 250px;'",
+                              driver.find_element(*resizeable_page.resizeable))
+
+        assert "width: 300px; height: 250px;" \
+               in get_property_value(driver, resizeable_page.resizeable, "style"), f"Box didn't resize"
