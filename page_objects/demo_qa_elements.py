@@ -342,3 +342,36 @@ class Resizeable(PageFactory):
 
     resizeable_restriction = (By.ID, "resizableBoxWithRestriction")
     resizeable = (By.ID, "resizable")
+
+
+class BookStoreApp(PageFactory):
+
+    username = (By.ID, "userName")
+    password = (By.ID, "password")
+    login = (By.ID, "login")
+    new_user = (By.ID, "newUser")
+    f_name = (By.ID, "firstname")
+    l_name = (By.ID, "lastname")
+    captcha_frame = (By.CSS_SELECTOR, "[title='reCAPTCHA']")
+    captcha_checkbox = (By.ID, "recaptcha-anchor")
+    register = (By.ID, "register")
+    back_to_login = (By.ID, "gotologin")
+    output_msg = (By.ID, "output")
+
+    # Profile
+    @staticmethod
+    def submit_btn(text):
+        return By.XPATH, f"//button[text()='{text}']"
+
+    username_value = (By.ID, "userName-value")
+
+    delete_all_books_modal = (By.XPATH, "//div[contains(@class,'modal-title')][text()='Delete All Books']")
+    delete_all_ok = (By.ID, "closeSmallModal-ok")
+    delete_all_cancel = (By.ID, "closeSmallModal-cancel")
+
+    # Book store
+    search_box = (By.ID, "searchBox")
+
+    @staticmethod
+    def book_link(text):
+        return By.XPATH, f"//a[text()='{text}']"

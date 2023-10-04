@@ -1,4 +1,7 @@
 import time
+
+import pytest
+
 from page_objects.demo_qa_elements import *
 from selenium.webdriver import Keys
 from selenium.webdriver.support.select import Select
@@ -38,6 +41,9 @@ select_menu_page = SelectMenu()
 # Interactions
 sortable_page = Sortable()
 resizeable_page = Resizeable()
+
+# Book store app
+book_store_page = BookStoreApp()
 
 
 @allure.title(ELEMENTS)
@@ -682,3 +688,94 @@ class TestInteractions:
 
         assert "width: 300px; height: 250px;" \
                in get_property_value(driver, resizeable_page.resizeable, "style"), f"Box didn't resize"
+
+
+@allure.title(BOOK_STORE)
+class TestBookStoreApp:
+
+    @pytest.fixture(scope="function", autouse=True)
+    def go_to_bookstore_page(self, driver):
+        navigate_to_url(driver, URL, homepage.logo)
+        scroll_to_elem_n_click(driver, homepage.card_elem(driver, BOOK_STORE))
+        wait_until_elem_has_text(driver, homepage.main_header, "Book Store")
+
+    # @pytest.fixture(scope="class", autouse=True)
+    # def create_new_user(self, driver):
+    #     navigate_to_url(driver, URL, homepage.logo)
+    #     scroll_to_elem_n_click(driver, homepage.card_elem(driver, BOOK_STORE))
+    #     wait_until_elem_has_text(driver, homepage.main_header, "Book Store")
+    #     scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Login"))
+    #     wait_until_elem_has_text(driver, homepage.main_header, "Login")
+    #
+    #     wait_until_elem_present(driver, book_store_page.new_user)
+    #     scroll_to_elem_n_click(driver, book_store_page.new_user)
+    #     wait_until_elem_present(driver, book_store_page.register)
+    #     input_text(driver, book_store_page.f_name, book_store_f_name)
+    #     input_text(driver, book_store_page.l_name, book_store_l_name)
+    #     input_text(driver, book_store_page.username, book_store_user)
+    #     input_text(driver, book_store_page.password, book_store_pass)
+    #
+    #     driver.switch_to.frame(driver.find_element(*book_store_page.captcha_frame))
+    #     wait_until_elem_present(driver, book_store_page.captcha_checkbox)
+    #     scroll_to_elem_n_click(driver, book_store_page.captcha_checkbox)
+    #     driver.switch_to.parent_frame()
+    #
+    #     scroll_to_elem_n_click(driver, book_store_page.register)
+    #     wait_until(driver, ec.alert_is_present())
+    #     assert "User Register Successfully." in driver.switch_to.alert.text, f"User is not created successfully"
+    #     driver.switch_to.alert.accept()
+    #     wait_until(driver, ec.element_to_be_clickable(book_store_page.back_to_login))
+    @pytest.fixture(scope="function", autouse=True)
+    def login(self, driver, go_to_bookstore_page):
+
+        scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Login"))
+        wait_until_elem_has_text(driver, homepage.main_header, "Login")
+
+        wait_until_elem_present(driver, book_store_page.username)
+        input_text(driver, book_store_page.username, book_store_user)
+        input_text(driver, book_store_page.password, book_store_pass)
+
+        assert book_store_user in get_property_value(driver, book_store_page.username, "value"), f"User name mismatch"
+        assert book_store_pass in get_property_value(driver, book_store_page.password, "value"), f"Password mismatch"
+
+        scroll_to_elem_n_click(driver, book_store_page.login)
+
+    def test_login(self, driver):
+
+        wait_until_elem_present(driver, book_store_page.submit_btn("Log out"))
+
+        assert book_store_user == get_text(driver, book_store_page.username_value), f"User name mismatch in profile"
+
+        scroll_to_elem_n_click(driver, book_store_page.submit_btn("Log out"))
+        wait_until_elem_present(driver, book_store_page.login)
+
+    def test_book_store_app(self, driver):
+        wait_until_elem_present(driver, book_store_page.submit_btn("Log out"))
+
+        scroll_to_elem_n_click(driver, book_store_page.submit_btn("Go To Book Store"))
+        wait_until_elem_present(driver, book_store_page.book_link("Git Pocket Guide"))
+
+        scroll_to_elem_n_click(driver, book_store_page.book_link("Git Pocket Guide"))
+        wait_until_elem_present(driver, book_store_page.submit_btn("Add To Your Collection"))
+
+        scroll_to_elem_n_click(driver, book_store_page.submit_btn("Add To Your Collection"))
+
+        wait_until(driver, ec.alert_is_present())
+        assert "Book added to your collection." in driver.switch_to.alert.text, f"Text in alert mismatch"
+        driver.switch_to.alert.accept()
+
+        scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Profile"))
+        wait_until_elem_has_text(driver, homepage.main_header, "Profile")
+        wait_until_elem_present(driver, book_store_page.book_link("Git Pocket Guide"))
+
+        scroll_to_elem_n_click(driver, book_store_page.submit_btn("Delete All Books"))
+        wait_until_elem_present(driver, book_store_page.delete_all_books_modal)
+        scroll_to_elem_n_click(driver, book_store_page.delete_all_ok)
+
+        wait_until(driver, ec.alert_is_present())
+        assert "All Books deleted." in driver.switch_to.alert.text, f"Text in alert mismatch"
+        driver.switch_to.alert.accept()
+
+        is_elem_displayed(driver, book_store_page.book_link("Git Pocket Guide"))
+        scroll_to_elem_n_click(driver, book_store_page.submit_btn("Log out"))
+        wait_until_elem_present(driver, book_store_page.login)

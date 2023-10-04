@@ -1,4 +1,6 @@
 from utility.utils import *
+import random
+import string
 
 URL = "https://demoqa.com"
 
@@ -35,3 +37,9 @@ dob = "09/21/23"
 subject = "Maths"
 city = "Delhi"
 state = "NCR"
+
+# Book Store App
+book_store_f_name = "Bruce"
+book_store_l_name = "Wayne"
+book_store_user = "bruce"
+book_store_pass = "Wayne#1234"
