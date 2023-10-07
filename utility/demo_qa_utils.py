@@ -1,6 +1,4 @@
 from utility.utils import *
-import random
-import string
 
 URL = "https://demoqa.com"
 

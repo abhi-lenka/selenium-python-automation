@@ -1,11 +1,15 @@
+import os
+import pytest
 import allure
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.action_chains import ActionChains
 from seleniumpagefactory.Pagefactory import WebElement
 from selenium.common.exceptions import NoSuchElementException
-from confest import *
 from requests import get
+
+download_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "downloads")
+data_folder_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
 
 
 @pytest.fixture(scope="session")

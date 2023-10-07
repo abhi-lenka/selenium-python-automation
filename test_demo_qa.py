@@ -1,7 +1,4 @@
 import time
-
-import pytest
-
 from page_objects.demo_qa_elements import *
 from selenium.webdriver import Keys
 from selenium.webdriver.support.select import Select
