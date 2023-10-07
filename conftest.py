@@ -44,9 +44,9 @@ def pytest_runtest_makereport(item, call):
 def test_failed_check(request):
     yield
     # request.node is an "item" because we use the default "function" scope
-    if request.node.rep_setup.failed:
+    if request.node.rep_setup and request.node.rep_setup.failed:
         print("setting up a test failed!", request.node.nodeid)
-    elif request.node.rep_setup.passed:
+    elif request.node.rep_setup and request.node.rep_setup.passed:
         if request.node.rep_call.failed:
             driver = request.node.funcargs['driver']
             take_screenshot(driver, request.node.nodeid)
