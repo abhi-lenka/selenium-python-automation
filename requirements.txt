@@ -1,6 +1,7 @@
 pytest
 allure-pytest
 pytest-html
+pytest-timeout
 requests
 selenium
 selenium-page-factory
