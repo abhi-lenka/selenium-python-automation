@@ -1,7 +1,6 @@
 import datetime
 import allure
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from allure_commons.types import AttachmentType
 from utility.utils import *
 # browsers = ["Edge", "Chrome"]
@@ -15,9 +14,10 @@ def driver(request):
     if browser == "Edge":
         driver = webdriver.Edge()
     elif browser == "Chrome":
-        chrome_options = Options()
+        chrome_options = webdriver.ChromeOptions()
         # Set the download path in the ChromeOptions instance.
         chrome_options.add_experimental_option(name="prefs", value={"download.default_directory": download_path})
+        # chrome_options.add_argument("--headless")
         driver = webdriver.Chrome(options=chrome_options)
     else:
         assert False, f"{browser} is not supported!!"
