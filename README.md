@@ -22,3 +22,4 @@ This contains various scenarios we face in our selenium automation as below:
 -> Allure Report
 -> Screenshot
 -> Screenshot attach in report when test failed
+-> Rest apis
