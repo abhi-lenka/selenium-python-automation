@@ -7,7 +7,7 @@ from utility.utils import *
 browsers = ["Chrome"]
 
 
-@pytest.fixture(scope="session", autouse=True, params=browsers)
+@pytest.fixture(scope="module", params=browsers)
 def driver(request):
     browser = request.param
     driver = None

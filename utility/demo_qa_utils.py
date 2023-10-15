@@ -41,3 +41,10 @@ book_store_f_name = "Bruce"
 book_store_l_name = "Wayne"
 book_store_user = "bruce"
 book_store_pass = "Wayne#1234"
+
+
+# Book store apis
+user = URL + "/Account/v1/User"
+login = URL + "/Account/v1/Authorized"
+generate_token = URL + "/Account/v1/GenerateToken"
+books = URL + "/BookStore/v1/Books"
