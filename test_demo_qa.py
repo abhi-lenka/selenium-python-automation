@@ -97,7 +97,7 @@ class TestElements:
 
     def test_elem_radio_button(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Radio Button"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Radio Button")
+        wait_until_elem_has_text(driver, homepage.center_text, "Radio Button")
         assert not driver.find_element(*radio_page.radio_yes).is_selected()
         assert not driver.find_element(*radio_page.radio_impressive).is_selected()
         assert not driver.find_element(*radio_page.radio_no).is_selected()
@@ -115,7 +115,7 @@ class TestElements:
 
     def test_elem_web_tables(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Web Tables"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Web Tables")
+        wait_until_elem_has_text(driver, homepage.center_text, "Web Tables")
 
         # Delete all the entries
         delete_icons = driver.find_elements(*webtable_page.delete_record)
@@ -148,7 +148,7 @@ class TestElements:
 
     def test_elem_buttons(self, driver, ac):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Buttons"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Buttons")
+        wait_until_elem_has_text(driver, homepage.center_text, "Buttons")
 
         ac.double_click(driver.find_element(*button_page.double_click_btn)).perform()
         wait_until_elem_present(driver, button_page.double_click_msg)
@@ -167,7 +167,7 @@ class TestElements:
 
     def test_elem_links(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Links"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Links")
+        wait_until_elem_has_text(driver, homepage.center_text, "Links")
 
         scroll_to_elem_n_click(driver, link_page.simple_link)
         handles = driver.window_handles
@@ -216,7 +216,7 @@ class TestElements:
 
     def test_elem_broken_images_links(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Broken Links - Images"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Broken Links - Images")
+        wait_until_elem_has_text(driver, homepage.center_text, "Broken Links - Images")
 
         assert not is_image_broken(driver, broken_link_page.valid_image), f"The image is broken"
         assert not is_image_broken(driver, broken_link_page.valid_image, attr=True), f"The image is broken"
@@ -247,7 +247,7 @@ class TestElements:
 
     def test_elem_dynamic_properties(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Dynamic Properties"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Dynamic Properties")
+        wait_until_elem_has_text(driver, homepage.center_text, "Dynamic Properties")
 
         assert not driver.find_element(*dynamic_page.enable_after).is_enabled(),\
             f"Button is enabled before 5 seconds"
