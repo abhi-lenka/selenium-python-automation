@@ -279,7 +279,7 @@ class TestForms:
     @pytest.mark.parametrize("gender", genders)
     def test_form(self, driver, gender):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Practice Form"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Practice Form")
+        wait_until_elem_has_text(driver, homepage.center_text, "Practice Form")
         input_text(driver, form_page.f_name, f_name)
         input_text(driver, form_page.l_name, l_name)
         input_text(driver, form_page.email, email)
@@ -319,7 +319,7 @@ class TestAlertFrameWindow:
 
     def test_browser_window(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Browser Windows"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Browser Windows")
+        wait_until_elem_has_text(driver, homepage.center_text, "Browser Windows")
 
         scroll_to_elem_n_click(driver, window_page.new_tab)
         win_handles = driver.window_handles
@@ -359,7 +359,7 @@ class TestAlertFrameWindow:
 
     def test_alerts(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Alerts"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Alerts")
+        wait_until_elem_has_text(driver, homepage.center_text, "Alerts")
 
         # Alert
         scroll_to_elem_n_click(driver, alert_page.alert_btn)
@@ -392,7 +392,7 @@ class TestAlertFrameWindow:
 
     def test_frames(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Frames"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Frames")
+        wait_until_elem_has_text(driver, homepage.center_text, "Frames")
 
         driver.switch_to.frame("frame1")
         assert "This is a sample page" in get_text(driver, frame_page.sample_h), f"Sample header mismatch in frame1"
@@ -406,7 +406,7 @@ class TestAlertFrameWindow:
 
     def test_nested_frames(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Nested Frames"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Nested Frames")
+        wait_until_elem_has_text(driver, homepage.center_text, "Nested Frames")
 
         driver.switch_to.frame("frame1")
         assert "Parent frame" in driver.find_element(By.TAG_NAME, "body").text, f"Sample text mismatch in parent frame"
@@ -422,7 +422,7 @@ class TestAlertFrameWindow:
 
     def test_modal_dialogs(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Modal Dialogs"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Modal Dialogs")
+        wait_until_elem_has_text(driver, homepage.center_text, "Modal Dialogs")
 
         scroll_to_elem_n_click(driver, modal_page.small_modal)
         wait_until_elem_present(driver, modal_page.modal_title("Small Modal"))
@@ -451,7 +451,7 @@ class TestWidgets:
 
     def test_accordian(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Accordian"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Accordian")
+        wait_until_elem_has_text(driver, homepage.center_text, "Accordian")
 
         assert is_elem_displayed(driver, acc_page.content_1), f"Section 1 content is not displayed."
 
@@ -475,7 +475,7 @@ class TestWidgets:
 
     def test_autocomplete(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Auto Complete"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Auto Complete")
+        wait_until_elem_has_text(driver, homepage.center_text, "Auto Complete")
 
         for color in self.colors:
             input_text(driver, auto_com_page.autocomplete_multiple_input, color)
@@ -494,7 +494,7 @@ class TestWidgets:
 
     def test_slider(self, driver, ac):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Slider"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Slider")
+        wait_until_elem_has_text(driver, homepage.center_text, "Slider")
 
         for x in [70, 100, -200]:
             ac.drag_and_drop_by_offset(driver.find_element(*slider_page.slider), x, 0).perform()
@@ -504,7 +504,7 @@ class TestWidgets:
 
     def test_progress_bar(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Progress Bar"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Progress Bar")
+        wait_until_elem_has_text(driver, homepage.center_text, "Progress Bar")
 
         ini_progress = int(get_property_value(driver, p_bar_page.progress_bar, "aria-valuenow"))
         scroll_to_elem_n_click(driver, p_bar_page.start_stop_btn)
@@ -520,7 +520,7 @@ class TestWidgets:
 
     def test_tabs(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Tabs"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Tabs")
+        wait_until_elem_has_text(driver, homepage.center_text, "Tabs")
 
         assert get_property_value(driver, tab_page.more_tab, "aria-disabled") == "true", f"More tab is not disabled"
         assert not is_elem_displayed(driver, tab_page.origin_panel), f"Origin panel is displayed"
@@ -536,7 +536,7 @@ class TestWidgets:
 
     def test_tooltips(self, driver, ac):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Tool Tips"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Tool Tips")
+        wait_until_elem_has_text(driver, homepage.center_text, "Tool Tips")
 
         time.sleep(2)
 
@@ -552,7 +552,7 @@ class TestWidgets:
 
     def test_menu(self, driver, ac):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Menu"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Menu")
+        wait_until_elem_has_text(driver, homepage.center_text, "Menu")
 
         time.sleep(2)
 
@@ -564,7 +564,7 @@ class TestWidgets:
 
     def test_select_menu(self, driver, ac):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Select Menu"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Select Menu")
+        wait_until_elem_has_text(driver, homepage.center_text, "Select Menu")
 
         option = "Group 2, option 2"
         input_text(driver, select_menu_page.select_option_input, option)
@@ -614,7 +614,7 @@ class TestInteractions:
 
     def test_sortable(self, driver, ac):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Sortable"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Sortable")
+        wait_until_elem_has_text(driver, homepage.center_text, "Sortable")
 
         old_items = ["One", "Two", "Three", "Four", "Five", "Six"]
         new_items = ["Two", "Three", "Four", "Five", "One", "Six"]
@@ -649,7 +649,7 @@ class TestInteractions:
 
     def test_selectable(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Selectable"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Selectable")
+        wait_until_elem_has_text(driver, homepage.center_text, "Selectable")
 
         items = [1, 2]
 
@@ -672,7 +672,7 @@ class TestInteractions:
 
     def test_resizeable(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Resizable"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Resizable")
+        wait_until_elem_has_text(driver, homepage.center_text, "Resizable")
 
         driver.execute_script("arguments[0].style='width: 300px; height: 250px;'",
                               driver.find_element(*resizeable_page.resizeable_restriction))
@@ -700,9 +700,9 @@ class TestBookStoreApp:
     # def create_new_user(self, driver):
     #     navigate_to_url(driver, URL, homepage.logo)
     #     scroll_to_elem_n_click(driver, homepage.card_elem(driver, BOOK_STORE))
-    #     wait_until_elem_has_text(driver, homepage.main_header, "Book Store")
+    #     wait_until_elem_has_text(driver, homepage.center_text, "Book Store")
     #     scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Login"))
-    #     wait_until_elem_has_text(driver, homepage.main_header, "Login")
+    #     wait_until_elem_has_text(driver, homepage.center_text, "Login")
     #
     #     wait_until_elem_present(driver, book_store_page.new_user)
     #     scroll_to_elem_n_click(driver, book_store_page.new_user)
@@ -726,7 +726,7 @@ class TestBookStoreApp:
     def login(self, driver, go_to_bookstore_page):
 
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Login"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Login")
+        wait_until_elem_has_text(driver, homepage.center_text, "Login")
 
         wait_until_elem_present(driver, book_store_page.username)
         input_text(driver, book_store_page.username, book_store_user)
@@ -762,7 +762,7 @@ class TestBookStoreApp:
         driver.switch_to.alert.accept()
 
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Profile"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Profile")
+        wait_until_elem_has_text(driver, homepage.center_text, "Profile")
         wait_until_elem_present(driver, book_store_page.book_link("Git Pocket Guide"))
 
         scroll_to_elem_n_click(driver, book_store_page.submit_btn("Delete All Books"))
