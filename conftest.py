@@ -16,6 +16,8 @@ def driver(request):
         opt.add_experimental_option(name="prefs", value={"download.default_directory": download_path})
         driver = webdriver.Edge(options=opt)
     elif browser == "Chrome":
+        # chromedriver_path = "/drivers/chromedriver_win32/chromedriver.exe"
+        # webdriver.Chrome(executable_path=chromedriver_path)
         chrome_options = webdriver.ChromeOptions()
         # Set the download path in the ChromeOptions instance.
         chrome_options.add_experimental_option(name="prefs", value={"download.default_directory": download_path})
