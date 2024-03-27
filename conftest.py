@@ -12,7 +12,9 @@ def driver(request):
     browser = request.param
     driver = None
     if browser == "Edge":
-        driver = webdriver.Edge()
+        opt = webdriver.EdgeOptions()
+        opt.add_experimental_option(name="prefs", value={"download.default_directory": download_path})
+        driver = webdriver.Edge(options=opt)
     elif browser == "Chrome":
         chrome_options = webdriver.ChromeOptions()
         # Set the download path in the ChromeOptions instance.

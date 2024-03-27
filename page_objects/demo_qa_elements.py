@@ -11,7 +11,8 @@ class HomePage(PageFactory):
     def card_elem(driver, text):
         return driver.find_element(By.XPATH, f"//div[@class='category-cards']//h5[contains(text(), '{text}')]")
 
-    main_header = (By.CLASS_NAME, "main-header")
+    main_header = (By.CLASS_NAME, "header-text")
+    center_text = (By.CLASS_NAME, "text-center")
 
     @staticmethod
     def left_panel_elem(driver, text):

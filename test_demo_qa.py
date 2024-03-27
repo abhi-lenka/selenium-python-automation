@@ -233,7 +233,7 @@ class TestElements:
 
     def test_elem_upload_download(self, driver, clean_download_folder):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Upload and Download"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Upload and Download")
+        wait_until_elem_has_text(driver, homepage.center_text, "Upload and Download")
 
         scroll_to_elem_n_click(driver, upload_download_page.download)
         # wait till the file gets downloaded
