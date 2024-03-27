@@ -60,7 +60,7 @@ class TestElements:
 
     def test_elem_text_box(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Text Box"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Text Box")
+        wait_until_elem_has_text(driver, homepage.center_text, "Text Box")
         input_text(driver, textbox_page.username, username)
         input_text(driver, textbox_page.email, email)
         input_text(driver, textbox_page.current_addr, current_addr)
@@ -74,7 +74,7 @@ class TestElements:
 
     def test_elem_check_box(self, driver):
         scroll_to_elem_n_click(driver, homepage.sub_ele(driver, "Check Box"))
-        wait_until_elem_has_text(driver, homepage.main_header, "Check Box")
+        wait_until_elem_has_text(driver, homepage.center_text, "Check Box")
 
         # Open all the closed toggles
         while True:
